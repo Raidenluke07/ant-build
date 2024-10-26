@@ -1,0 +1,36 @@
+<project name="calculator-app" basedir="." default="war">
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="web.dir" value="web"/>
+    <property name="war.file" value="calculator-app.war"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete file="${war.file}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
+            <classpath>
+                <pathelement path="lib/jakarta.servlet-api-6.1.0.jar"/> <!-- Ensure this path is correct -->
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="war" depends="clean, compile">
+        <mkdir dir="${build.dir}/WEB-INF/classes"/>
+        <copy todir="${build.dir}/WEB-INF/classes">
+            <fileset dir="${classes.dir}"/>
+        </copy>
+        <copy todir="${build.dir}/WEB-INF">
+            <fileset dir="${web.dir}/WEB-INF"/>
+        </copy>
+        <war destfile="${war.file}" webxml="${build.dir}/WEB-INF/web.xml">
+            <fileset dir="${build.dir}"/>
+        </war>
+    </target>
+
+</project>
