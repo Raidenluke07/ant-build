@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!-- Include default Struts2 configuration -->
+    <include file="struts-default.xml"/>
+
+    <!-- Define your package and actions -->
+    <package name="default" extends="struts-default">
+        <!-- Action mapping -->
+        <action name="hello" class="com.HelloWorld">
+            <result>welcome.jsp</result>
+        </action>
+    </package>
+</struts>
