@@ -1,0 +1,56 @@
+<project name="jsp-war" basedir="." default="deploy">
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="war.file" value="yourproject.war"/>
+    <property name="tomcat.dir" value="/home/raiden-22120/Downloads/apache-tomcat-10.1.26"/>
+ 
+    <property name="tomcat.start.script" value="${tomcat.dir}/bin/startup.sh"/>  
+    <property name="tomcat.stop.script" value="${tomcat.dir}/bin/shutdown.sh"/>  
+  
+	
+
+
+    
+	<target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete file="${war.file}"/>
+    </target>
+
+   
+	<target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <copy todir="${build.dir}">
+            <fileset dir="${src.dir}">
+                <include name="**/*.jsp"/>
+            </fileset>
+        </copy>
+    </target>
+
+   
+	<target name="war" depends="clean, compile">
+        <war destfile="${war.file}" needxmlfile="false">
+            <fileset dir="${build.dir}"/>
+        </war>
+    </target>
+
+   
+	<target name="deploy" depends="war">
+        <copy file="${war.file}" todir="${tomcat.dir}/webapps"/>
+    </target>
+
+    
+	<target name="start-tomcat" depends="deploy">
+        <exec executable="${tomcat.start.script}" failonerror="true">
+            <arg value=""/>
+        </exec>
+    </target>
+
+  
+	<target name="stop-tomcat">
+        <exec executable="${tomcat.stop.script}" failonerror="true">
+            <arg value=""/>
+        </exec>
+    </target>
+
+</project>
